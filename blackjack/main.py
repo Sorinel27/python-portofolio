@@ -65,7 +65,6 @@ def main():
         print(f"Your balance is ${balance}.")
     while balance > 0:
         bet = int(input("Place your bet: $"))
-        print(balance)
         if bet > balance:
             print(f"Not enough credits. Your balance is ${balance}.")
         win = False
@@ -74,8 +73,6 @@ def main():
         computer_cards = shuffle_cards(2)
         player_score = score(player_cards)
         computer_score = score(computer_cards)
-        print(player_cards)
-        print(computer_cards)
         if player_cards[0] == 11 and player_cards[1] == 11:
             player_cards[1] = 1
         if computer_cards[0] == 11 and computer_cards[1] == 11:
@@ -85,9 +82,9 @@ def main():
         another_card = input("Type 'y' to get another card, type 'n' to pass: ")
         if another_card == 'n':
             balance = final_touch(player_cards, player_score, computer_cards, computer_score, bet, balance)
-            print(f"Your balance is ${balance}.")
+            print(f"Your balance is ${balance}.\n\n\n")
         elif another_card == 'y':
-            while player_score < 22:
+            while player_score < 21:
                 player_cards = hit_card(player_cards)
                 player_score = score(player_cards)
                 print(f"Your cards: {player_cards}, current score: {player_score}")
@@ -97,7 +94,7 @@ def main():
                     if another_card == 'n':
                         break
             balance = final_touch(player_cards, player_score, computer_cards, computer_score, bet, balance)
-            print(f"Your balance is ${balance}.")
+            print(f"Your balance is ${balance}.\n\n\n")
 
 
 if __name__ == '__main__':
