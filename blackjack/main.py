@@ -13,6 +13,7 @@ def shuffle_cards(n):
 
 
 def hit_card(list):
+    default_score = 0
     default_score = score(list)
     random.shuffle(cards)
     if cards[0] == 11 and default_score + 11 > 21:
@@ -65,8 +66,9 @@ def main():
         print(f"Your balance is ${balance}.")
     while balance > 0:
         bet = int(input("Place your bet: $"))
-        if bet > balance:
+        while bet > balance:
             print(f"Not enough credits. Your balance is ${balance}.")
+            bet = int(input("Place your bet: $"))
         win = False
         computer_score = 0
         player_cards = shuffle_cards(2)
