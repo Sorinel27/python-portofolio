@@ -1,4 +1,3 @@
-import random
 from question_model import Question
 from question_data import data
 from quiz_brain import QuizBrain
