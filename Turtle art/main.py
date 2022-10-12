@@ -44,7 +44,6 @@ def main():
     marcel.pd()
     step = 1
     for i in range(100):
-        print(step)
         random.shuffle(rgb)
         marcel.pencolor(rgb[0])
         if step % 10 == 0 and step / 10 % 2 != 0:
