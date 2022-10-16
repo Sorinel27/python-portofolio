@@ -12,7 +12,7 @@ screen = t.Screen()
 
 def main():
     t.listen()
-    bet = t.textinput("Make your bet", "Who will win the race?")
+    bet = t.textinput("Make your bet", "Who will win the race? Enter a colour:")
     t1.shape("turtle")
     t2.shape("turtle")
     t3.shape("turtle")
