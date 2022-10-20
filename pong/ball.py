@@ -14,9 +14,17 @@ class Ball(Turtle):
         self.color("white")
         self.pu()
         self.setheading(random.randint(0, 359))
+        self.x_speed = 10
+        self.y_speed = 10
 
     def move(self):
-        screen.update()
-        self.forward(speed)
+        x = self.xcor() + self.x_speed
+        y = self.ycor() + self.y_speed
+        self.goto(x, y)
 
+    def bounce_y(self):
+        self.y_speed *= -1
+
+    def bounce_x(self):
+        self.x_speed *= -1
 
