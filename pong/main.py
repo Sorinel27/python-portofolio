@@ -23,8 +23,6 @@ def main():
     while ball_not_out:
         screen.update()
         time.sleep(0.1)
-        print(f"{ball.xcor()} : {ball.ycor()}")
-        print(f"{ball.heading()}")
         if ball.xcor() > 500 or ball.ycor() > 300:
             ball.setheading(ball.heading() + 90)
         if ball.xcor() < -500 or ball.ycor() < -300:
