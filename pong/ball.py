@@ -13,7 +13,7 @@ class Ball(Turtle):
         self.shape("circle")
         self.color("white")
         self.pu()
-        self.setheading(random.randint(0, 359))
+        # self.setheading(random.randint(0, 359))
         self.x_speed = 10
         self.y_speed = 10
 
@@ -27,4 +27,10 @@ class Ball(Turtle):
 
     def bounce_x(self):
         self.x_speed *= -1
+
+    def restart(self):
+        self.speed("fastest")
+        self.goto(0, 0)
+        self.speed("normal")
+        self.setheading(random.randint(0, 359))
 
