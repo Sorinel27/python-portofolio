@@ -18,6 +18,7 @@ def main():
     screen.title("Pong")
     screen.bgcolor("black")
     screen.setup(width=1000, height=700)
+    screen.tracer(0)
     player2.goto(pos2)
     screen.listen()
     screen.onkeypress(player1.up, "w")
