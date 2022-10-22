@@ -1,28 +1,19 @@
-import time
 from turtle import Turtle
 import random
 
 number_of_cars = 30
 cars_list = []
 for i in range(number_of_cars):
-    cars_list.append(i + 1)
+    cars_list.append(i)
 colors = ["red", "orange", "yellow", "green", "blue", "purple"]
-
-
-def refresh(car):
-    y = random.randint(-280, 280)
-    x = random.randint(320, 620)
-    random.shuffle(colors)
-    car.color(colors[0])
-    car.goto(x, y)
 
 
 class Cars(Turtle):
     def __init__(self):
         super().__init__()
+        self.hideturtle()
         cars = []
         for n in cars_list:
-            print(n)
             car = Turtle("square")
             random.shuffle(colors)
             car.color(colors[0])
