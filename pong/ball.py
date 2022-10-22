@@ -1,9 +1,5 @@
 from turtle import Turtle
-from turtle import Screen
 import random
-
-speed = 20
-screen = Screen()
 
 
 class Ball(Turtle):
@@ -14,6 +10,7 @@ class Ball(Turtle):
         self.color("white")
         self.pu()
         # self.setheading(random.randint(0, 359))
+        self.move_speed = 0.1
         self.x_speed = 10
         self.y_speed = 10
 
@@ -27,10 +24,12 @@ class Ball(Turtle):
 
     def bounce_x(self):
         self.x_speed *= -1
+        self.move_speed *= 0.9
 
     def restart(self):
         self.speed("fastest")
         self.goto(0, 0)
         self.speed("normal")
+        self.bounce_x()
         self.setheading(random.randint(0, 359))
 

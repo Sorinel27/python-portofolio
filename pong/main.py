@@ -2,7 +2,7 @@ import time
 from turtle import Screen
 from player import Player
 from ball import Ball
-from scoreboard import Score1
+from scoreboard1 import Score1
 from scoreboard2 import Score2
 
 screen = Screen()
@@ -26,13 +26,15 @@ def main():
     screen.onkeypress(player2.down, "Down")
     print(ball.heading())
     ball_not_out = True
+    print(f"{player1.pos()} : {player2.pos()}")
     while ball_not_out:
-        time.sleep(0.1)
+        time.sleep(ball.move_speed)
         screen.update()
         ball.move()
-        if ball.ycor() > 340 or ball.ycor() < -340:
+        print(ball.distance(player2))
+        if ball.ycor() > 330 or ball.ycor() < -330:
             ball.bounce_y()
-        if ball.distance(player1) < 50 and ball.xcor() > 455 or ball.distance(player2) < 50 and ball.xcor() < -455:
+        if (ball.distance(player2) < 50 and ball.xcor() > 440) or (ball.distance(player1) < 50 and ball.xcor() < -440):
             ball.bounce_x()
         if ball.xcor() > 500:
             score_player1.update()
