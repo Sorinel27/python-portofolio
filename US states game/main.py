@@ -14,12 +14,18 @@ def main():
     data = pandas.read_csv("50_states.csv")
     states_list = data["state"].to_list()
     no_states_guessed = 0
-    answer_input = screen.textinput("Guess the state", "Type the name of a state:")
     guessed_states = []
 
     while no_states_guessed < 50:
-        if answer_input is None:
-            print("Not a correct state!")
+        answer_input = screen.textinput(f"{no_states_guessed}/50 states correct", "Type the name of a state:")
+        if answer_input == "Exit":
+            missing_states = []
+            for st in states_list:
+                if st not in guessed_states:
+                    missing_states.append(st)
+            new_data = pandas.DataFrame(missing_states)
+            new_data.to_csv("missed_states.csv")
+            break
         for st in states_list:
             if st == answer_input:
                 no_states_guessed += 1
@@ -28,8 +34,6 @@ def main():
                 y = data[data["state"] == st].values[0][2]
                 state = States(x, y, st)
                 guessed_states.append(state)
-        if no_states_guessed < 50:
-            answer_input = screen.textinput(f"{no_states_guessed}/50 states correct", "Type the name of a state:")
     screen.exitonclick()
 
 
