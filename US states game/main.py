@@ -19,10 +19,7 @@ def main():
     while no_states_guessed < 50:
         answer_input = screen.textinput(f"{no_states_guessed}/50 states correct", "Type the name of a state:")
         if answer_input == "Exit":
-            missing_states = []
-            for st in states_list:
-                if st not in guessed_states:
-                    missing_states.append(st)
+            missing_states = [st for st in states_list if st not in guessed_states]
             new_data = pandas.DataFrame(missing_states)
             new_data.to_csv("missed_states.csv")
             break
