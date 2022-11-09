@@ -5,9 +5,12 @@ import smtplib
 
 MY_LAT = 46.771210
 MY_LONG = 23.623634
-
+iss_lat = 0
+iss_long = 0
 
 def is_above():
+    global iss_lat
+    global iss_long
     response = requests.get("http://api.open-notify.org/iss-now.json")
     data = response.json()
 
@@ -51,5 +54,5 @@ while True:
                                 )
             connection.close()
     else:
-        print("Not around!")
+        print(f"Not around! The ISS lat:{iss_lat} long:{iss_long}")
     time.sleep(60)
