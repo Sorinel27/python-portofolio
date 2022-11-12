@@ -44,7 +44,7 @@ while True:
         if is_night():
             print(f"Above you!!! The ISS lat:{iss_lat} long:{iss_long}")
             my_email = "soringrape@gmail.com"
-            my_password = "weirfhnbhgkmsuxd"
+            my_password = "zzz..."
             connection = smtplib.SMTP("smtp.gmail.com", 587)
             connection.ehlo()
             connection.starttls()
