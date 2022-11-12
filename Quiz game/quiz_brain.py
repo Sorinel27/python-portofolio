@@ -1,11 +1,15 @@
-import  html
+import html
+ans = ""
 
 class QuizBrain:
     def __init__(self, question_list):
         self.question_number = 0
         self.question_list = question_list
         self.score = 0
-        self.current_question = None
+        self.q_text = ""
+        global ans
+        q = self.question_list[self.question_number]
+        ans = q.answer
 
     def still_has_question(self):
         ok = True
@@ -14,17 +18,19 @@ class QuizBrain:
         return ok
 
     def next_question(self):
+        global ans
         q = self.question_list[self.question_number]
+        ans = q.answer
         self.question_number += 1
-        q_text = html.unescape(q.text)
-        user_answer = input(f"Q.{self.question_number}: {q_text} (True/False): ")
-        self.check_answer(user_answer, q.answer)
+        self.q_text = html.unescape(q.text)
+        return f"Q.{self.question_number}: {self.q_text}"
+        # user_answer = input(f"Q.{self.question_number}: {q_text} (True/False): ")
+        # self.check_answer(user_answer, q.answer)
 
-    def check_answer(self, user_answer, correct_answer):
-        if user_answer.lower() == correct_answer.lower():
-            print("That's correct!")
+    def check_answer(self, user_answer):
+        global ans
+        q = self.question_list[self.question_number]
+        ans = q.answer
+        if user_answer.lower() == ans.lower():
             self.score += 1
-        else:
-            print("That's wrong.")
-            print(f"The correct answer was {correct_answer}.")
-        print(f"Your current score is: {self.score}/{self.question_number}")
+        return self.score

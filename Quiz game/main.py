@@ -12,7 +12,7 @@ def main():
         obj = Question(q, a)
         question_bank.append(obj)
     quiz = QuizBrain(question_bank)
-    quiz_ui = AppInterface()
+    quiz_ui = AppInterface(quiz)
     # while quiz.still_has_question():
     #     quiz.next_question()
     print("\nYou've completed the quiz.")
