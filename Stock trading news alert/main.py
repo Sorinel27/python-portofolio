@@ -34,7 +34,10 @@ price_difference = price_now - price_past
 price_change = (price_difference / price_past) * 100
 
 if price_change >= 2 or price_change <= -2:
-    text = f"{STOCK}: 🔺{price_change}%"
+    if price_change >= 2:
+        text = f"{STOCK}: 🔺{price_change}%"
+    elif price_change <= 2:
+        text = f"{STOCK}: 🔻{price_change}%"
     news_parameters = {
         "q": COMPANY_NAME,
         "apiKey": NEWS_API_KEY,
