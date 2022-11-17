@@ -56,10 +56,10 @@ if price_change >= 2 or price_change <= -2:
         text += articles[i]["description"]
 
     print(text)
-    client = Client(account_sid, auth_token)
-
-    message = client.messages.create(
-        body=text,
-        from_='+15017122661',
-        to='+40761468119'
-    )
+    # client = Client(account_sid, auth_token)
+    #
+    # message = client.messages.create(
+    #     body=text,
+    #     from_='+15017122661',
+    #     to='+40761468119'
+    # )

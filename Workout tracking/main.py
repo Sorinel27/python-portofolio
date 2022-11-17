@@ -14,7 +14,7 @@ headers = {
 
 value = {
     "query": input("Tell me which exercises you did: "),
-    "gender": "female",
+    "gender": "male",
     "weight_kg": 60,
     "height_cm": 180,
     "age": 21
