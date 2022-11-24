@@ -26,12 +26,13 @@ client = Client(account_sid, auth_token)
 
 # Using the free api key we can't get the weather data hourly but at 4 hours.
 # This will result in the first 8 items of "list"
+
 forecast_list = data['list']
 for i in range(8):
     if forecast_list[i]['weather'][0]['id'] < 700:
         message = client.messages.create(
             body='Raining today!',
-            from_='+15017122661',
+            from_='+16293483487',
             to='+40761468119'
         )
         print(message.status)
