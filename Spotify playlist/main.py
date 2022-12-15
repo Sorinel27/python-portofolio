@@ -29,4 +29,5 @@ music_tags = soup.find_all(name="li", class_="o-chart-results-list__item // lrv-
 for song in music_tags:
     songs_list.append(song.h3.text.split("\t\t\t\t\t")[1].split('\t\t')[0])
 
+# to be continued...
 # 2019-06-01
