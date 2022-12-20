@@ -2,7 +2,7 @@ from selenium import webdriver
 
 URL = "https://orteil.dashnet.org/experiments/cookie/"
 
-path = "/Users/Sorin/PycharmProjects/100 days/day48/chromedriver"
+path = "your path.."
 driver = webdriver.Chrome(executable_path=path)
 driver.get(URL)
 
