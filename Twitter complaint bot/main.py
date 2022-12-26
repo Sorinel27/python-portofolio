@@ -5,7 +5,7 @@ import time
 SPEED_URL = "https://www.speedtest.net/"
 TWITTER_URL = "https://twitter.com/i/flow/login"
 
-path = "/Users/Sorin/PycharmProjects/100 days/day48/chromedriver"
+path = "your path"
 
 driver = webdriver.Chrome(executable_path=path)
 driver.get(SPEED_URL)
@@ -27,8 +27,8 @@ u_speed = driver.find_element(by="xpath", value='//*[@id="container"]/div/div[3]
 u_speed = u_speed.text
 print(u_speed)
 
-username = "Sorin63701900"
-password = "carsorin"
+username = "userboss"
+password = "password123"
 
 driver.get(TWITTER_URL)
 
