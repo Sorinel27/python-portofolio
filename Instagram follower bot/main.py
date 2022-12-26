@@ -2,13 +2,13 @@ from selenium import webdriver
 import time
 
 URL = "https://www.instagram.com/"
-USER = ""
-INSTA_URL = "https://www.instagram.com/sorinel_fr/followers/"
+USER = "a user id"
+INSTA_URL = f"https://www.instagram.com/{USER}/followers/"
 
-email = "soringrape@gmail.com"
-password = "carsorin"
+email = "email@gmail.com"
+password = "pass"
 
-driver = webdriver.Chrome(executable_path="/Users/Sorin/PycharmProjects/100 days/day48/chromedriver")
+driver = webdriver.Chrome(executable_path="path")
 driver.get(URL)
 
 cookies = driver.find_element(by="xpath", value='/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/button[2]')
@@ -33,4 +33,5 @@ for i in range(number_of_people_to_follow):
     follow.click()
     time.sleep(1)
 
+time.sleep(10)
 driver.quit()
