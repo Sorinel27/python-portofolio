@@ -27,8 +27,8 @@ u_speed = driver.find_element(by="xpath", value='//*[@id="container"]/div/div[3]
 u_speed = u_speed.text
 print(u_speed)
 
-username = "userboss"
-password = "password123"
+username = "Sorin63701900"
+password = "carsorin"
 
 driver.get(TWITTER_URL)
 
