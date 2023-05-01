@@ -16,7 +16,7 @@ def blog_page():
     return render_template('blog.html', posts=response, id=0)
 
 
-@app.route('/post/<id>')
+@app.route('/blog/post/<id>')
 def post_page(id):
     global response
     info = []
