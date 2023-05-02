@@ -1,13 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap");
 body {
   background-image: url("img/bg.jpg");
   background-size: auto;
+}
+
+body .front-logo {
+  text-align: center;
+  padding-top: 7%;
+  padding-bottom: 7%;
+}
+
+body .news-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+body .news-container a {
+  text-decoration: none;
+}
+
+body #about-me {
+  margin-top: 7%;
+  background-color: white;
+  font-family: 'Nunito', 'Arial', sans-serif;
+  margin-bottom: 7%;
+}
+
+body #about-me p {
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+body #about-me p:last-child {
+  margin-bottom: 0;
+}
+
+body .container {
+  background-color: white;
+  margin-top: 7%;
+  font-family: 'Nunito', 'Arial', sans-serif;
 }
 
 footer {
   background-color: #333;
   color: #fff;
   text-align: center;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
   padding: 20px;
@@ -35,6 +81,10 @@ footer .icons li {
 footer a {
   text-decoration: none;
   color: #d8d8d8;
+}
+
+footer a:hover {
+  color: white;
 }
 
 @media screen and (max-width: 768px) {

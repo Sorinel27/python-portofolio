@@ -1,12 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap");
 body{
     background-image: url('img/bg.jpg');
     background-size: auto;
+    .front-logo{
+        text-align: center;
+        padding-top: 7%;
+        padding-bottom: 7%;
+    }
+    .news-container{
+        // font-family: 'Nunito', 'Arial', sans-serif;
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        a{
+            text-decoration: none;
+        }
+    }
+    #about-me{
+        margin-top: 7%;
+        background-color: white;
+        font-family: 'Nunito', 'Arial', sans-serif;
+        p{
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+        p:last-child{
+            margin-bottom: 0;
+        }
+        margin-bottom: 7%;
+    }
+    .container{
+        background-color: white;
+        margin-top: 7%;
+        font-family: 'Nunito', 'Arial', sans-serif;
+    }
 }
 footer {
     background-color: #333;
     color: #fff;
     text-align: center;
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
     padding: 20px;
@@ -23,6 +58,9 @@ footer {
     a{
         text-decoration: none;
         color: rgb(216, 216, 216);
+    }
+    a:hover{
+        color: white;
     }
 }
 
