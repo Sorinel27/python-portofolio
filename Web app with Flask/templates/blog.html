@@ -53,19 +53,19 @@
         <h1 class="page-title">Project Slomber</h1>
     </div>
     <div class="news-container">
-        {% for item in response['articles'] %}
-        <a href="/">
+        {% for i in range(number_of_articles) %}
+        <a href="/blog/post/{{i}}">
             <div class="card mb-3">
-                <img src="{{item['urlToImage']}}" class="card-img-top" alt="Image">
+                <img src="{{response['articles'][i]['urlToImage']}}" class="card-img-top" alt="Image">
                 <div class="card-body">
                     <h4 class="card-title">
-                        {{item['title']}}
+                        {{response['articles'][i]['title']}}
                         <span class="badge bg-secondary">New</span>
                     </h4>
-                    <p class="card-text">{{item['description']}}</p>
+                    <p class="card-text">{{response['articles'][i]['description']}}</p>
                     <p style="text-align: center;" class="card-text"><small class="text-body-secondary">Published
-                            {{item['publishedAt'].split('T')[0]}}</small></p>
-                </div>
+                            {{response['articles'][i]['publishedAt'].split('T')[0]}}</small></p>
+                </div> 
             </div>
         </a>
         {% endfor %}

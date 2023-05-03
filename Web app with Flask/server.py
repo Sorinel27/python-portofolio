@@ -22,7 +22,10 @@ def blog_page():
 
 @app.route('/blog/post/<post_id>')
 def post_page(post_id):
-    return f'{post_id}'
+    response = requests.get(GET_LINK)
+    response = response.json()
+    number_of_articles = len(response['articles'])
+    return render_template('post.html', response=response, number_of_articles=number_of_articles, post_id=post_id)
 
 
 @app.route('/about')
