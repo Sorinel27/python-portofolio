@@ -25,6 +25,7 @@ def post_page(post_id):
     response = requests.get(GET_LINK)
     response = response.json()
     number_of_articles = len(response['articles'])
+    post_id = int(post_id)
     return render_template('post.html', response=response, number_of_articles=number_of_articles, post_id=post_id)
 
 

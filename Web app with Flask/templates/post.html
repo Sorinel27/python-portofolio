@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -52,10 +52,16 @@
     <div class="front-logo">
         <h1 class="page-title">Project Slomber</h1>
     </div>
-    <div class="news-container">
-        <h1>
-            {{response['articles'][post_id]['title']}}
-        </h1>
+    <div class="news-container" style="padding-bottom: 50px;">
+        <div class="card" style="width: 100%;">
+            <img src="{{response['articles'][post_id]['urlToImage']}}" class="card-img-top" alt="Image">
+            <div class="card-body">
+                <h5 class="card-title">{{response['articles'][post_id]['title']}}</h5>
+                <p class="card-text">{{response['articles'][post_id]['description']}}</p>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed laborum necessitatibus iste unde exercitationem fuga impedit ipsam doloribus autem consequuntur cum blanditiis dignissimos reprehenderit modi quis sit fugit illo alias laboriosam non, libero ex porro. Facere quibusdam magnam ipsum rerum officia debitis deserunt itaque provident earum totam temporibus tempora quod praesentium at neque amet modi quia dolore, et dolorem voluptatem, voluptatibus voluptates? Enim, ducimus doloremque. Aperiam officiis quae doloribus minus optio dicta voluptatem totam quo assumenda libero quaerat soluta debitis aliquam perferendis quas incidunt molestiae corrupti laudantium nulla, recusandae cupiditate hic possimus provident. Consectetur ut magnam optio, fugiat architecto vero.</p>
+                <a href="{{response['articles'][post_id]['url']}}" target="_blank" style="margin-right: auto; margin-left: auto;" class="btn btn-primary">Go to article</a>
+            </div>
+        </div>
     </div>
 </body>
 
