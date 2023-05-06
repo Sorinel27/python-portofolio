@@ -39,5 +39,10 @@ def contact_page():
     return render_template('contact.html')
 
 
+@app.route('/easteregg')
+def cool_page():
+    return render_template('solar.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
