@@ -1,0 +1,27 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}Add Movie{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h1 class="heading">Add a Movie</h1>
+    <form action="{{url_for('add')}}" method="POST">
+      {{form.csrf_token}}
+      <p>
+        {{form.title.label}}<br>
+        {{form.title}}
+        {% for error in form.title.errors %}
+          <span style="color: red;">{{error}}</span>
+        {% endfor %}
+      </p>
+      {{form.add_movie_submit}}
+    </form>
+</div>
+{% endblock %}
