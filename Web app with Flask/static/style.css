@@ -49,11 +49,36 @@ body .container {
   font-family: 'Nunito', 'Arial', sans-serif;
 }
 
+body .secret {
+  text-decoration: none;
+  color: #333;
+}
+
+body .contact-form {
+  background-color: white;
+  margin-top: 10%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+body .contact-form form {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+body .contact-form form .form-group {
+  margin-bottom: 1.2%;
+}
+
+body .successMessage {
+  padding-top: 10%;
+}
+
 footer {
   background-color: #333;
   color: #fff;
   text-align: center;
-  position: relative;
+  position: fixed;
   bottom: 0;
   width: 100%;
   padding: 20px;

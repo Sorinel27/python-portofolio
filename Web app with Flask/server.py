@@ -1,6 +1,5 @@
-from flask import Flask
-from flask import render_template
-import requests
+from flask import Flask, render_template, url_for, request, redirect
+import requests, smtplib
 
 app = Flask(__name__)
 NEWS_KEY = '4d8f01d7210c405e907159f8f8e0cd49'
@@ -34,8 +33,37 @@ def about_page():
     return render_template('about.html')
 
 
-@app.route('/contact')
+@app.route('/messageSend/<name>/<email>/<message>')
+def message_send(name, email, message):
+    print(name)
+    visitor_mail = email
+    print(visitor_mail)
+    visitor_message = message
+    print(visitor_message)
+    email = "soringrape@gmail.com"
+    password = "weirfhnbhgkmsuxd"
+    connection = smtplib.SMTP("smtp.gmail.com", 587)
+    connection.ehlo()
+    connection.starttls()
+    connection.login(user=email, password=password)
+    connection.sendmail(from_addr=email,
+                        to_addrs="sorin78910@gmail.com",
+                        msg=f"Subject:A new message from {name}!\n\nName: {name}\n\nEmail: {visitor_mail}\n\nMessage: {visitor_message}")
+    connection.close()
+    return render_template('message.html')
+
+
+@app.route('/contact', methods=['POST', 'GET'])
 def contact_page():
+    data = []
+    if request.method == 'POST':
+        data.append(request.form['name'])
+        name = request.form['name']
+        data.append(request.form['email'])
+        email = request.form['email']
+        data.append(request.form['message'])
+        message = request.form['message']
+        return redirect(url_for('message_send', name=name, email=email, message=message))
     return render_template('contact.html')
 
 

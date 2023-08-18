@@ -36,12 +36,34 @@ body{
         margin-top: 7%;
         font-family: 'Nunito', 'Arial', sans-serif;
     }
+    .secret{
+        text-decoration: none;
+        color: #333;
+    }
+    .contact-form{
+        // width: 50%;
+        background-color: white;
+        // display: flex;
+        margin-top: 10%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        form{
+            margin-left: 5%;
+            margin-right: 5%;
+            .form-group{
+                margin-bottom: 1.2%;
+            }
+        }
+    }
+    .successMessage{
+        padding-top: 10%;
+    }    
 }
 footer {
     background-color: #333;
     color: #fff;
     text-align: center;
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding: 20px;
