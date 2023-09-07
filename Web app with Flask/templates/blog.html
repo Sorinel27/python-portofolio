@@ -16,7 +16,7 @@
     <title>Project Slonder</title>
 </head>
 
-<body>
+<body style="margin-bottom: 10%;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <h1><a class="navbar-brand" href="/"><i class="bi bi-tablet"></i> Project Slomber</a></h1>
@@ -32,6 +32,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news">News</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
@@ -52,23 +55,25 @@
     <div class="front-logo">
         <h1 class="page-title">Project Slomber</h1>
     </div>
-    <div class="news-container">
-        {% for i in range(number_of_articles) %}
-        <a href="/blog/post/{{i}}">
-            <div class="card mb-3">
-                <img src="{{response['articles'][i]['urlToImage']}}" class="card-img-top" alt="Image">
-                <div class="card-body">
-                    <h4 class="card-title">
-                        {{response['articles'][i]['title']}}
-                        <span class="badge bg-secondary">New</span>
-                    </h4>
-                    <p class="card-text">{{response['articles'][i]['description']}}</p>
-                    <p style="text-align: center;" class="card-text"><small class="text-body-secondary">Published
-                            {{response['articles'][i]['publishedAt'].split('T')[0]}}</small></p>
-                </div> 
-            </div>
-        </a>
-        {% endfor %}
+    <div class="container my-5">
+        {%for post in posts%}
+            <a href="blog/post/{{post.id}}" style="text-decoration: none;">
+                <div class="bg-body-tertiary p-5 rounded">
+                    <div class="col-sm-8 py-5 mx-auto">
+                        <h1 class="display-5 fw-normal">
+                            {{post.title}}
+                        </h1>
+                        <h2 class="fs-5">
+                            {{post.subtitle}}
+                        </h2>
+                        <p>
+                            Posted by <b>{{post.user}}</b> on {{post.date}}
+                        </p>
+                    </div>
+                </div>
+            </a> <hr>
+
+        {%endfor%}
     </div>
 </body>
 
