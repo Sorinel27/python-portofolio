@@ -68,9 +68,10 @@
                     Posted by <b>{{post.user}}</b> on {{post.date}}
                 </p> <br> <br>
                 <h3>
-                    {{post.text}}
+                    {{post.text|safe()}}
                 </h3>
-                <a class="btn btn-primary" href="" role="button">Edit post</a>
+                <hr>
+                <a class="btn btn-primary" href="/edit-post/{{post.id}}" role="button">Edit post</a>
             </div>
         </div>
     </div>

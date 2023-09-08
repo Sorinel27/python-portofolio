@@ -56,6 +56,14 @@ body{
             }
         }
     }
+    .new-post-form{
+        background-color: #333;
+        color: aliceblue;
+        margin-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
     .successMessage{
         padding-top: 10%;
     }    

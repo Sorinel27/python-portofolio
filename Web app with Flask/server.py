@@ -1,7 +1,12 @@
 import requests
 import smtplib
 from flask import Flask, render_template, url_for, request, redirect
+from flask_wtf import FlaskForm, CSRFProtect
+from flask_ckeditor import CKEditorField, CKEditor
 from flask_sqlalchemy import SQLAlchemy
+from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField
+from flask_bootstrap import Bootstrap
 import datetime
 
 app = Flask(__name__)
@@ -9,9 +14,21 @@ NEWS_KEY = '4d8f01d7210c405e907159f8f8e0cd49'
 GET_LINK = f'https://newsapi.org/v2/top-headlines?country=us&apiKey={NEWS_KEY}'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+csrf = CSRFProtect(app)
+app.secret_key = "topsecretkey"
+ckeditor = CKEditor(app)
 
 with app.app_context():
+    Bootstrap(app)
     db = SQLAlchemy(app)
+
+
+    class PostForm(FlaskForm):
+        title = StringField('Blog Post Title', validators=[DataRequired()])
+        subtitle = StringField('Subtitle', validators=[DataRequired()])
+        user = StringField('Your name', validators=[DataRequired()])
+        content = CKEditorField('Content', validators=[DataRequired()])
+        submit = SubmitField('Submit post')
 
 
     class Post(db.Model):
@@ -21,6 +38,9 @@ with app.app_context():
         user = db.Column(db.String(250), nullable=False)
         date = db.Column(db.String(250), nullable=False)
         text = db.Column(db.String(2500), nullable=False)
+
+        def __repr__(self):
+            return f'Book {self.title}'
 
 
     db.create_all()
@@ -45,7 +65,8 @@ with app.app_context():
         response = response.json()
         number_of_articles = len(response['articles'])
         post_id = int(post_id)
-        return render_template('news-post.html', response=response, number_of_articles=number_of_articles, post_id=post_id)
+        return render_template('news-post.html', response=response, number_of_articles=number_of_articles,
+                               post_id=post_id)
 
 
     @app.route('/about')
@@ -90,23 +111,6 @@ with app.app_context():
     @app.route('/blog')
     def blog_page():
         all_posts = db.session.query(Post).all()
-
-        # d = datetime.datetime.now()
-        # today_date = ""
-        # today_date += d.strftime("%B")  # month
-        # today_date += " "
-        # today_date += d.strftime("%d")  # day
-        # today_date += ", "
-        # today_date += d.strftime("%Y")  # year
-        # new_post = Post(
-        #     title="Altceva",
-        #     subtitle="xdddddddddd",
-        #     user="Sorinel_fr",
-        #     date=today_date,
-        #     text='Fear is not existent, suit up and swing through the city.'
-        # )
-        # db.session.add(new_post)
-        # db.session.commit()
         return render_template('blog.html', posts=all_posts)
 
 
@@ -116,10 +120,61 @@ with app.app_context():
         return render_template('post.html', post=selected_post)
 
 
+    @app.route('/new-post', methods=['POST', 'GET'])
+    def new_post():
+        form = PostForm()
+        if request.method == "POST":
+            d = datetime.datetime.now()
+            today_date = ""
+            today_date += d.strftime("%B")  # month
+            today_date += " "
+            today_date += d.strftime("%d")  # day
+            today_date += ", "
+            today_date += d.strftime("%Y")  # year
+            new_post = Post(
+                title=request.form['title'],
+                subtitle=request.form['subtitle'],
+                user=request.form['user'],
+                date=today_date,
+                text=request.form['content']
+            )
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect(url_for('blog_page'))
+        return render_template('new-post.html', form=form)
+
+
+    @app.route('/edit-post/<id>', methods=['POST', 'GET'])
+    def edit_page(id):
+        post_data = Post.query.get(id)
+        print(post_data.user)
+        form = PostForm(
+            title=post_data.title,
+            subtitle=post_data.subtitle,
+            user=post_data.user,
+            content=post_data.text
+        )
+        if request.method == 'POST':
+            post_data.title = request.form['title']
+            post_data.subtitle = request.form['subtitle']
+            post_data.user = request.form['user']
+            post_data.text = request.form['content']
+            db.session.commit()
+            return redirect(url_for(f'blog_page'))
+        return render_template('new-post.html', form=form, id=id)
+
+
+    @app.route('/delete/<id>')
+    def delete_page(id):
+        data = Post.query.get(id)
+        db.session.delete(data)
+        db.session.commit()
+        return redirect(url_for('blog_page'))
+
+
     @app.route('/easteregg')
     def cool_page():
         return render_template('solar.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -55,6 +55,7 @@
     <h1 style="text-align: center; margin-top: 2.5%;">Contact</h1>
     <div class="contact-form">
         <form action="http://127.0.0.1:5000/contact" method="post">
+            {{form.csrf_token}}
             <div class="form-group">
                 <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name">
             </div>
