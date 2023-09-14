@@ -42,13 +42,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
-
+                    {% if current_user.is_authenticated == False: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.is_authenticated: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hello, {{current_user.name}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    {% endif %}
                 </ul>
-                <!-- search -->
-                <!-- <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> -->
             </div>
         </div>
     </nav>
@@ -71,7 +81,7 @@
                     {{post.text|safe()}}
                 </h3>
                 <hr>
-                <a class="btn btn-primary" href="/edit-post/{{post.id}}" role="button">Edit post</a>
+                {% if current_user.name == post.user%} <a class="btn btn-primary" href="/edit-post/{{post.id}}" role="button">Edit post</a> {% endif %}
             </div>
         </div>
     </div>

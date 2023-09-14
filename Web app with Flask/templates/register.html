@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/blog">Blog</a>
@@ -42,27 +42,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
-                    {% if current_user.is_authenticated == False: %}
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
-                    </li>
-                    {% endif %}
-                    {% if current_user.is_authenticated: %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Hello, {{current_user.name}}</a>
+                        <a class="nav-link active" href="/register">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log Out</a>
                     </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-    <a class="secret" href="/easteregg"><h1 style="text-align: center;">main</h1></a>
+    <div class="text-center" style="margin-top: 7%;">
+        <form class="form-signin" method="post">
+            {{form.csrf_token}}
+            <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+            <label for="inputEmail" class="sr-only">Name</label>
+            <input type="text" name="name" id="inputEmail" class="form-control" placeholder="Name" required autofocus>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </div>
 </body>
 
 <footer>

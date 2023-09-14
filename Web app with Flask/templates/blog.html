@@ -42,13 +42,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
-
+                    {% if current_user.is_authenticated == False: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.is_authenticated: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hello, {{current_user.name}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    {% endif %}
                 </ul>
-                <!-- search -->
-                <!-- <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> -->
             </div>
         </div>
     </nav>
@@ -67,17 +77,23 @@
                         {{post.subtitle}}
                     </h2>
                     <p>
-                        Posted by <b>{{post.user}}</b> on {{post.date}} <a href="/delete/{{post.id}}"><button
-                                type="button" class="btn-close" aria-label="Close"></button></a>
+                        Posted by <b>{{post.user}}</b> on {{post.date}} {%if post.user == current_user.name%} <a href="/delete/{{post.id}}"><button
+                            type="button" class="btn-close" aria-label="Close"></button></a> {% endif %}
                     </p>
                 </div>
             </div>
         </a>
         <hr>
         {%endfor%}
+        {%if not current_user.is_authenticated:%}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/register"><button class="btn btn-primary btn-lg me-md-2" type="button" style="margin-bottom: 5%;">Register to create a new post</button></a>
+        </div>
+        {% else %}
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="/new-post"><button class="btn btn-primary btn-lg me-md-2" type="button" style="margin-bottom: 5%;">Create new post</button></a>
         </div>
+        {% endif %}
     </div>
 </body>
 

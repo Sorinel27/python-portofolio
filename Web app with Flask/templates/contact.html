@@ -16,7 +16,7 @@
     <title>Contact</title>
 </head>
 
-<body>
+<body style="margin-bottom: 10%;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <h1><a class="navbar-brand" href="/"><i class="bi bi-tablet"></i> Project Slomber</a></h1>
@@ -42,21 +42,53 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/contact">Contact</a>
                     </li>
-                    
+                    {% if current_user.is_authenticated == False: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.is_authenticated: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hello, {{current_user.name}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    {% endif %}
                 </ul>
-                <!-- search -->
-                <!-- <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> -->
             </div>
         </div>
     </nav>
     <h1 style="text-align: center; margin-top: 2.5%;">Contact</h1>
     <div class="contact-form">
-        <form action="http://127.0.0.1:5000/contact" method="post">
+        <form action="/contact" method="POST">
             {{form.csrf_token}}
-            <div class="form-group">
+            <p>
+                {{form.name.label}}<br>
+                {{form.name}}
+                {% for error in form.name.errors %}
+                  <span style="color: red;">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.email.label}}<br>
+                {{form.email}}
+                {% for error in form.email.errors %}
+                  <span style="color: red;">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.text.label}}<br>
+                {{form.text}}
+                {% for error in form.text.errors %}
+                  <span style="color: red;">{{error}}</span>
+                {% endfor %}
+            </p> <hr>   
+            {{form.submit}}
+            <!-- <div class="form-group">
                 <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name">
             </div>
             <div class="form-group">
@@ -65,7 +97,7 @@
             <div class="form-group">
               <input height="500" type="text" class="form-control" id="exampleInputMessage1" placeholder="Message" name="message">
             </div>
-            <button type="submit" class="btn btn-primary">SEND</button>
+            <button type="submit" class="btn btn-primary">SEND</button> -->
         </form>    
     </div>
 </body>
