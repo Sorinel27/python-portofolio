@@ -32,6 +32,17 @@ body{
         }
         margin-bottom: 7%;
     }
+    .user-card{
+        background-color: aliceblue;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        width: 70%;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .container{
         background-color: white;
         margin-top: 7%;

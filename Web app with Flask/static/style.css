@@ -44,6 +44,25 @@ body #about-me p:last-child {
   margin-bottom: 0;
 }
 
+body .user-card {
+  background-color: aliceblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  width: 70%;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 body .container {
   background-color: white;
   margin-top: 7%;

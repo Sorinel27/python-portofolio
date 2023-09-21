@@ -6,6 +6,7 @@ from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_ckeditor import CKEditorField, CKEditor
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 from wtforms.validators import DataRequired
 from wtforms import StringField, SubmitField, EmailField
 from flask_bootstrap import Bootstrap
@@ -26,11 +27,13 @@ with app.app_context():
     Bootstrap(app)
     db = SQLAlchemy(app)
 
+
     class ContactForm(FlaskForm):
         name = StringField('Your name', validators=[DataRequired()])
         email = EmailField('Your e-mail', validators=[DataRequired()])
         text = StringField('Your message', validators=[DataRequired()])
         submit = SubmitField('Send')
+
 
     class PostForm(FlaskForm):
         title = StringField('Blog Post Title', validators=[DataRequired()])
@@ -39,23 +42,61 @@ with app.app_context():
         content = CKEditorField('Content', validators=[DataRequired()])
         submit = SubmitField('Submit post')
 
-    class User(UserMixin, db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        email = db.Column(db.String(100), unique=True)
-        password = db.Column(db.String(100))
-        name = db.Column(db.String(1000), unique=True)
+    class CommentForm(FlaskForm):
+        content = CKEditorField('Content', validators=[DataRequired()])
+        submit = SubmitField('Add new comment')
 
-    class Post(db.Model):
+
+    class User(UserMixin, db.Model):
+        __tablename__ = "user"
         id = db.Column(db.Integer, primary_key=True)
+        email = db.Column(db.String(100), unique=True, nullable=False)
+        password = db.Column(db.String(100), nullable=False)
+        name = db.Column(db.String(100), unique=True, nullable=False)
+        profile_views = db.Column(db.Integer, nullable=False)
+        posts = relationship("BlogPosts", back_populates="author")
+        comment = relationship("Comments", back_populates="author")
+
+    class BlogPosts(UserMixin, db.Model):
+        __tablename__ = "posts"
+        id = db.Column(db.Integer, primary_key=True)
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+        author = relationship("User", back_populates="posts")
+        comment = relationship("Comments", back_populates="posts")
         title = db.Column(db.String(250), unique=True, nullable=False)
         subtitle = db.Column(db.String(250), nullable=False)
-        user = db.Column(db.String(250), nullable=False)
         date = db.Column(db.String(250), nullable=False)
-        text = db.Column(db.String(2500), nullable=False)
+        text = db.Column(db.Text, nullable=False)
+        post_views = db.Column(db.Integer, nullable=False)
 
-        def __repr__(self):
-            return f'Book {self.title}'
+    class Comments(UserMixin, db.Model):
+        __tablename__ = "comment"
+        id = db.Column(db.Integer, primary_key=True)
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+        post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+        author = relationship("User", back_populates="comment")
+        posts = relationship("BlogPosts", back_populates="comment")
+        text = db.Column(db.Text, nullable=False)
+        date = db.Column(db.String(250), nullable=False)
+        time = db.Column(db.String(250), nullable=False)
 
+
+    # class User(UserMixin, db.Model):
+    #     id = db.Column(db.Integer, primary_key=True)
+    #     email = db.Column(db.String(100), unique=True)
+    #     password = db.Column(db.String(100))
+    #     name = db.Column(db.String(1000), unique=True)
+    #
+    # class Post(db.Model):
+    #     id = db.Column(db.Integer, primary_key=True)
+    #     title = db.Column(db.String(250), unique=True, nullable=False)
+    #     subtitle = db.Column(db.String(250), nullable=False)
+    #     user = db.Column(db.String(250), nullable=False)
+    #     date = db.Column(db.String(250), nullable=False)
+    #     text = db.Column(db.String(2500), nullable=False)
+    #
+    #     def __repr__(self):
+    #         return f'Book {self.title}'
 
     db.create_all()
 
@@ -63,6 +104,7 @@ with app.app_context():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.filter_by(id=user_id).first()
+
 
     @app.route('/')
     def main_page():
@@ -74,7 +116,8 @@ with app.app_context():
         response = requests.get(GET_LINK)
         response = response.json()
         number_of_articles = len(response['articles'])
-        return render_template('news.html', response=response, number_of_articles=number_of_articles, is_logged=current_user.is_authenticated)
+        return render_template('news.html', response=response, number_of_articles=number_of_articles,
+                               is_logged=current_user.is_authenticated)
 
 
     @app.route('/news/post/<post_id>')
@@ -114,26 +157,55 @@ with app.app_context():
 
     @app.route('/contact', methods=['POST', 'GET'])
     def contact_page():
-        form = ContactForm()
-        if request.method == 'POST':
-            name = request.form['name']
-            email = request.form['email']
-            message = request.form['text']
-            print(message)
-            return redirect(url_for('message_send', name=name, email=email, message=message))
+        if current_user.is_authenticated:
+            form = ContactForm()
+            if request.method == 'POST':
+                name = current_user.name
+                email = current_user.email
+                message = request.form['text']
+                return redirect(url_for('message_send', name=name, email=email, message=message))
+        else:
+            form = ContactForm()
+            if request.method == 'POST':
+                name = request.form['name']
+                email = request.form['email']
+                message = request.form['text']
+                return redirect(url_for('message_send', name=name, email=email, message=message))
         return render_template('contact.html', form=form)
 
 
     @app.route('/blog')
     def blog_page():
-        all_posts = db.session.query(Post).all()
+        all_posts = db.session.query(BlogPosts).all()
         return render_template('blog.html', posts=all_posts, is_logged=current_user.is_authenticated)
 
 
-    @app.route('/blog/post/<id>')
+    @app.route('/blog/post/<id>', methods=['POST', 'GET'])
     def post_page(id):
-        selected_post = Post.query.get(id)
-        return render_template('post.html', post=selected_post, current_user=current_user)
+        selected_post = BlogPosts.query.filter_by(id=id).first()
+        selected_post.post_views += 1
+        db.session.commit()
+        post_comments = Comments.query.filter_by(post_id=id).all()
+        form = CommentForm()
+        if request.method == "POST" and request.form['content'] != '':
+            d = datetime.datetime.now()
+            today_date = ""
+            today_date += d.strftime("%B")  # month
+            today_date += " "
+            today_date += d.strftime("%d")  # day
+            today_date += ", "
+            today_date += d.strftime("%Y")  # year
+            new_comment = Comments(
+                user_id=current_user.id,
+                post_id=selected_post.id,
+                text=request.form['content'],
+                date=today_date,
+                time=d.strftime("%X")
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            return redirect(url_for('post_page', id=id))
+        return render_template('post.html', comments=post_comments, form=form, post=selected_post, current_user=current_user)
 
 
     @app.route('/new-post', methods=['POST', 'GET'])
@@ -148,10 +220,10 @@ with app.app_context():
             today_date += d.strftime("%d")  # day
             today_date += ", "
             today_date += d.strftime("%Y")  # year
-            new_post = Post(
+            new_post = BlogPosts(
                 title=request.form['title'],
                 subtitle=request.form['subtitle'],
-                user=current_user.name,
+                user_id=current_user.id,
                 date=today_date,
                 text=request.form['content']
             )
@@ -162,31 +234,35 @@ with app.app_context():
 
 
     @app.route('/edit-post/<id>', methods=['POST', 'GET'])
+    @login_required
     def edit_page(id):
-        post_data = Post.query.get(id)
-        print(post_data.user)
-        form = PostForm(
-            title=post_data.title,
-            subtitle=post_data.subtitle,
-            user=post_data.user,
-            content=post_data.text
-        )
-        if request.method == 'POST':
-            post_data.title = request.form['title']
-            post_data.subtitle = request.form['subtitle']
-            post_data.user = current_user.name
-            post_data.text = request.form['content']
-            db.session.commit()
-            return redirect(url_for(f'blog_page'))
-        return render_template('new-post.html', form=form, id=id)
+        post_data = BlogPosts.query.get(id)
+        if current_user.id == 1 or current_user.id == post_data.user_id:
+            form = PostForm(
+                title=post_data.title,
+                subtitle=post_data.subtitle,
+                user=post_data.author.name,
+                content=post_data.text
+            )
+            if request.method == 'POST':
+                post_data.title = request.form['title']
+                post_data.subtitle = request.form['subtitle']
+                post_data.user = current_user.name
+                post_data.text = request.form['content']
+                db.session.commit()
+                return redirect(url_for(f'blog_page'))
+            return render_template('new-post.html', form=form, id=id)
+        else:
+            return f'<h1>FORBIDDEN</h1>', 403
 
 
     @app.route('/delete/<id>')
     def delete_page(id):
-        data = Post.query.get(id)
+        data = BlogPosts.query.get(id)
         db.session.delete(data)
         db.session.commit()
         return redirect(url_for('blog_page'))
+
 
     @app.route('/login', methods=['GET', 'POST'])
     def login_page():
@@ -205,12 +281,12 @@ with app.app_context():
                 flash('This email does not exist, please try again.')
         return render_template('login.html', form=form)
 
-
     @app.route('/logout')
     @login_required
     def logout():
         logout_user()
         return redirect(url_for('main_page'))
+
 
     @app.route('/register', methods=['GET', 'POST'])
     def register_page():
@@ -224,7 +300,8 @@ with app.app_context():
                 new_user = User(
                     name=name,
                     email=email,
-                    password=password
+                    password=password,
+                    profile_views=0
                 )
                 db.session.add(new_user)
                 db.session.commit()
@@ -234,6 +311,40 @@ with app.app_context():
                 return redirect(url_for('login_page'))
         return render_template('register.html', form=form)
 
+
+    @app.route('/delete/post/comment/<id>')
+    @login_required
+    def delete_comment(id):
+        selected_comment = Comments.query.get(id)
+        if current_user.id == selected_comment.user_id or current_user.id == 1:
+            post_id = selected_comment.post_id
+            db.session.delete(selected_comment)
+            db.session.commit()
+            return redirect(url_for('post_page', id=post_id))
+        else:
+            return f'<h1 style="color: red;">FORBIDDEN</h1>', 403
+
+    @app.route('/profile/<name>')
+    def user_profile(name):
+        wrong_name = False
+        user = User.query.filter_by(name=name).first()
+        user_posts = BlogPosts.query.filter_by(user_id=user.id).all()
+        if current_user.is_authenticated:
+            try:
+                if current_user.id != user.id:
+                    user.profile_views += 1
+                    db.session.commit()
+            except:
+                wrong_name = True
+                return render_template('profile.html', wrong_name=wrong_name, name=name)
+        user = User.query.filter_by(name=name).first()
+        return render_template('profile.html',
+                               user=user,
+                               wrong_name=wrong_name,
+                               name=name,
+                               user_posts=user_posts,
+                               number_of_posts=len(user_posts)
+                               )
 
     @app.route('/easteregg')
     def cool_page():
