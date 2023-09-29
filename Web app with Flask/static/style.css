@@ -63,6 +63,43 @@ body .user-card {
   margin-right: auto;
 }
 
+body .panel-card {
+  background-color: aliceblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 40%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  margin-top: 6%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body .panel-form {
+  padding: 8%;
+}
+
+body .hoverable-button:hover + .display-on-hover {
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  padding: 2px 5px;
+  width: 70px;
+  text-align: center;
+}
+
+body .display-on-hover {
+  display: none;
+}
+
 body .container {
   background-color: white;
   margin-top: 7%;
@@ -72,6 +109,14 @@ body .container {
 body .secret {
   text-decoration: none;
   color: #333;
+}
+
+body .text-center {
+  margin-top: 7%;
+}
+
+body .login-form {
+  padding: 5%;
 }
 
 body .contact-form {

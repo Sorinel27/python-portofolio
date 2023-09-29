@@ -29,6 +29,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if current_user.id == 1%}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/panel"><i class="bi bi-sliders"></i></a>
+                    </li>
+                    {% endif %}
                     {%if current_user.is_authenticated: %}
                     <li class="nav-item">
                         <div class="btn-group">
@@ -72,12 +77,31 @@
     </nav>
     
     <!-- main profile page -->
-    <div class="user-card">
+    <div class="jumbotron user-card">
+        <br>
         {% if wrong_name: %}
         <h3>Error: No user with name {{name}}</h3>
         {% else %}
-        <h3>{{user.name}}</h3>
+        <h3>{{user.name}} {% if user.id == 1: %}<i class="bi bi-hammer"></i>{% endif %} {% if user.is_admin: %}<i class="bi bi-display-fill"></i>{% endif %} {%if user.is_developer: %}<i class="bi bi-code-slash"></i>{% endif %}</h3>
         <hr>
+        {% if user.picture_url != None: %}
+        <img src="{{url_for('static', filename=route)}}" class="rounded mx-auto d-block" class="rounded mx-auto d-block">
+        {% else %}
+        <img src="{{url_for('static', filename='img/user.png')}}" class="rounded mx-auto d-block" width="400px" height="400px">
+        {% endif %}
+        <hr>
+        {% if user.has_functions: %}
+        {% if user.id == 1:%}
+        <h5 style="color: mediumblue;"><i class="bi bi-hammer"></i> Founder</h5>
+        {% endif %}
+        {% if user.is_admin: %}
+        <h5 style="color:crimson;"><i class="bi bi-display-fill"></i> Admin</h5>
+        {% endif %}
+        {% if user.is_developer: %}
+        <h5 style="color:forestgreen;"><i class="bi bi-code-slash"></i> Developer</h5>
+        {% endif %}
+        <hr>
+        {% endif %}
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -104,13 +128,17 @@
                 {% endif %}
             </tbody>
         </table>
+        {% if (current_user.is_authenticated and current_user.name == user.name) or current_user.is_admin: %}
+        <hr>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/profile/{{user.name}}/edit" class="btn btn-secondary me-md-2">Edit Profile</a>
+        </div>
+        {% endif %}
         <hr>
         <p>Profile views: {{user.profile_views}}</p>
         {% endif %}
     </div>
-
 </body>
-
 <footer>
     <ul class="icons">
         <li><a href="https://twitter.com/Sorin63701900" target="_blank"><i class="fab fa-twitter"></i></a></li>

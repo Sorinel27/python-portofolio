@@ -29,6 +29,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if current_user.id == 1: %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/panel"><i class="bi bi-sliders"></i></a>
+                    </li>
+                    {% endif %}
                     {%if current_user.is_authenticated: %}
                     <li class="nav-item">
                         <div class="btn-group">
@@ -90,7 +95,7 @@
                     {{post.text|safe()}}
                 </h3>
                 <hr>
-                {% if current_user.id == post.user_id or current_user.id == 1%} <a class="btn btn-primary"
+                {% if current_user.id == post.user_id or current_user.is_admin == 1%} <a class="btn btn-primary"
                     href="/edit-post/{{post.id}}" role="button">Edit post</a>
                 <hr> {% endif %}
                 {% for comment in comments: %}
@@ -102,7 +107,7 @@
                     </a>
                     <h6>
                         {{comment.date}} at {{comment.time}}
-                        {% if current_user.id == 1 or current_user.id == comment.author.id: %}
+                        {% if current_user.is_admin == 1 or current_user.id == comment.author.id: %}
                             <a href="http://127.0.0.1:5000/delete/post/comment/{{comment.id}}"><button type="button" class="btn-close" aria-label="Close"></button></a>
                         {% endif %}
                     </h6>

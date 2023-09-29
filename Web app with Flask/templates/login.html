@@ -16,7 +16,7 @@
     <title>Project Slonder</title>
 </head>
 
-<body>
+<body style="margin-bottom: 10%;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <h1><a class="navbar-brand" href="/"><i class="bi bi-tablet"></i> Project Slomber</a></h1>
@@ -52,32 +52,30 @@
             </div>
         </div>
     </nav>
-    <div class="text-center" style="margin-top: 7%;">
-        <form class="form-signin" method="post">
-            {{form.csrf_token}}
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class=flashes>
-                {% for message in messages %}
-                <p style="color: brown;">{{ message }}</p>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% endwith %}
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required
-                autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password"
-                required>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+    <div class="text-center">
+        <div class="jumbotron user-card">
+            <form method="post" class="login-form">
+                {{form.csrf_token}}
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class=flashes>
+                    {% for message in messages %}
+                    <p style="color: brown;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="mb-3">
+                  <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email address" required>
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                  <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+        </div>
     </div>
 </body>
 

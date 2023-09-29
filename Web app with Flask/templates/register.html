@@ -52,18 +52,33 @@
             </div>
         </div>
     </nav>
-    <div class="text-center" style="margin-top: 7%;">
-        <form class="form-signin" method="post">
-            {{form.csrf_token}}
-            <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-            <label for="inputEmail" class="sr-only">Name</label>
-            <input type="text" name="name" id="inputEmail" class="form-control" placeholder="Name" required autofocus>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+    <div class="text-center">
+        <div class="jumbotron user-card">
+            <form method="post" class="login-form needs-validation">
+                {{form.csrf_token}}
+                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class=flashes>
+                    {% for message in messages %}
+                    <p style="color: brown;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="mb-3">
+                  <input type="text" class="form-control" name="text" aria-describedby="textHelp" placeholder="Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email address" required>
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                  <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create new account</button>
+            </form>
+        </div>
     </div>
 </body>
 

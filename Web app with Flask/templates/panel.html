@@ -18,7 +18,7 @@
     <title>Project Slonder</title>
 </head>
 
-<body style="margin-bottom: 10%;">
+<body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <h1><a class="navbar-brand" href="/"><i class="bi bi-tablet"></i> Project Slomber</a></h1>
@@ -31,7 +31,7 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if current_user.id == 1%}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#"><i class="bi bi-sliders"></i></a>
+                        <a class="nav-link active" aria-current="page" href="/panel"><i class="bi bi-sliders"></i></a>
                     </li>
                     {% endif %}
                     {%if current_user.is_authenticated: %}
@@ -58,7 +58,7 @@
                         <a class="nav-link" href="/news">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/about">About</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
@@ -75,17 +75,45 @@
             </div>
         </div>
     </nav>
-    <br>
-    <h1 style="text-align: center;">About me</h1>
-    <br>
-    <h3 style="text-align: center;">Lorem ipsum dolor sit amet consectetur.</h3>
-
-    <div id="about-me">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus harum sapiente voluptatum distinctio nam repudiandae est. Ut distinctio, sed est ad veniam maiores, voluptates culpa blanditiis unde eos vitae soluta iste doloribus reiciendis ea hic perspiciatis animi minima, porro neque non inventore fugiat. Unde, iusto perferendis nostrum, facere mollitia quos repellat ex illum cum, voluptatem odit? Nemo voluptates dolores sunt. Nemo delectus praesentium architecto in rerum. Non explicabo optio earum illo doloribus quo inventore ex natus sunt impedit temporibus, saepe ipsum. Iusto cum eligendi tempora vero. Assumenda velit, dignissimos nostrum ipsum commodi mollitia omnis, unde recusandae repellat hic, earum quaerat.</p>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, repellat. Reiciendis facere, laborum a obcaecati earum nesciunt fugit sapiente odio in ab eius quam velit aspernatur exercitationem ex, soluta dicta molestias corporis, voluptates aliquid molestiae iusto? Consequuntur ea eligendi quos optio repellat sunt itaque soluta iusto veritatis incidunt quaerat dolorum quas dolore ut et quisquam, amet dolores non corrupti odit dolor suscipit omnis inventore blanditiis. Voluptatibus obcaecati nobis est temporibus, vitae, quo similique illum asperiores, impedit id saepe ab? Esse deleniti cumque nostrum temporibus totam mollitia? Temporibus totam optio necessitatibus nostrum, iusto, sunt sapiente qui eaque architecto fugiat excepturi? Molestias!</p>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum similique ab aut, nemo vero, optio dolor asperiores provident repellendus fugit iure animi praesentium autem, placeat harum nesciunt illum molestias nulla nostrum amet natus libero a possimus blanditiis! Ipsum laborum expedita dolorum enim quae fuga, error sed sapiente ab obcaecati, officiis suscipit animi unde nostrum eligendi qui sit? Ipsa, placeat iste deleniti maxime illo molestiae impedit odit ullam id natus, quasi recusandae a cumque alias, cum sequi. Et animi eius dignissimos delectus sit temporibus repudiandae corporis aliquam velit, possimus optio nihil inventore. Ipsum distinctio amet voluptate incidunt quas culpa nesciunt vero.</p>
+    <div class="jumbotron panel-card">
+        <form method="POST" class="panel-form">
+            {{form.csrf_token}}
+            <h3 style="padding-top: 1%;">Admin Panel</h3>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class=flashes>
+                {% for message in messages %}
+                <p style="color: brown;">{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <hr>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" name="name" class="form-control" placeholder="Username" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" name="adm_check" type="checkbox" role="switch"
+                    id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">
+                    <h5 style="color:crimson;"><i class="bi bi-display-fill"></i> Admin</h5>
+                </label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" name="dev_check" type="checkbox" role="switch"
+                    id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">
+                    <h5 style="color:forestgreen;"><i class="bi bi-code-slash"></i> Developer</h5>
+                </label>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-dark btn-lg">Confirm changes</button>
+        </form>
     </div>
 </body>
+
 <footer>
     <ul class="icons">
         <li><a href="https://twitter.com/Sorin63701900" target="_blank"><i class="fab fa-twitter"></i></a></li>
@@ -96,4 +124,5 @@
     </ul>
     <a href="https://sorinelfr.ro/" target="_blank">Copyright &copy; 2023 sorinel_fr</a>
 </footer>
+
 </html>
