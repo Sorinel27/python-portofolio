@@ -5,18 +5,13 @@
 */
 /* Header */
 body.is-preload #header .inner {
-  -webkit-transform: none;
   transform: none;
   opacity: 1;
 }
-
 body.is-preload #header .inner .actions {
-  -webkit-transform: none;
   transform: none;
   opacity: 1;
 }
-
 body.is-preload #header:after {
   opacity: 0;
-}
-/*# sourceMappingURL=noscript.css.map */
+}/*# sourceMappingURL=noscript.css.map */

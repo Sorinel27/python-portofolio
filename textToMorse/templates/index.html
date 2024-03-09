@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>Morse Code</title>
+</head>
+<body>
+    {% if encode == 1: %}
+    <h1>Morse Code Encoder App</h1>
+    <button class="glow-on-hover"><a href="/decode">Decode Morse</a></button>
+    <form method="post">
+        <label for="text">Enter text:</label>
+        <!-- pentru input ca atribut pot sa pun placehoder="" -->
+        <input type="text" id="text" name="text" value="{{text}}"> 
+        <button type="submit">Convert to Morse Code</button>
+    </form>
+    <div id="result">{{encodedText}}</div>
+    {% else %}
+    <h1>Morse Code Decoder App</h1>
+    <button class="glow-on-hover"><a href="/">Encode Morse</a></button>
+    <form method="post">
+        <label for="text">Enter Morse Code text:</label>
+        <!-- pentru input ca atribut pot sa pun placehoder="" -->
+        <input type="text" id="text" name="text" value="{{text}}"> 
+        <button type="submit">Decode the Morse Code</button>
+    </form>
+    <div id="result">{{decodedText}}</div>
+    {% endif %}
+</body>
+</html>

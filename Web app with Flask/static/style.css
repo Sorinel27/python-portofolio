@@ -4,88 +4,59 @@ body {
   background-image: url("img/bg.jpg");
   background-size: auto;
 }
-
 body .front-logo {
   text-align: center;
   padding-top: 7%;
   padding-bottom: 7%;
 }
-
 body .news-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
 }
-
 body .news-container a {
   text-decoration: none;
 }
-
 body #about-me {
   margin-top: 7%;
   background-color: white;
-  font-family: 'Nunito', 'Arial', sans-serif;
+  font-family: "Nunito", "Arial", sans-serif;
   margin-bottom: 7%;
 }
-
 body #about-me p {
   margin-left: 25%;
   margin-right: 25%;
 }
-
 body #about-me p:last-child {
   margin-bottom: 0;
 }
-
 body .user-card {
   background-color: aliceblue;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   width: 70%;
   margin-top: 2%;
   margin-left: auto;
   margin-right: auto;
 }
-
 body .panel-card {
   background-color: aliceblue;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 40%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   margin-top: 6%;
   margin-left: auto;
   margin-right: auto;
 }
-
 body .panel-form {
   padding: 8%;
 }
-
 body .hoverable-button:hover + .display-on-hover {
   display: block;
   position: absolute;
@@ -95,62 +66,45 @@ body .hoverable-button:hover + .display-on-hover {
   width: 70px;
   text-align: center;
 }
-
 body .display-on-hover {
   display: none;
 }
-
 body .container {
   background-color: white;
   margin-top: 7%;
-  font-family: 'Nunito', 'Arial', sans-serif;
+  font-family: "Nunito", "Arial", sans-serif;
 }
-
 body .secret {
   text-decoration: none;
   color: #333;
 }
-
 body .text-center {
   margin-top: 7%;
 }
-
 body .login-form {
   padding: 5%;
 }
-
 body .contact-form {
   background-color: white;
   margin-top: 10%;
   padding-top: 50px;
   padding-bottom: 50px;
 }
-
 body .contact-form form {
   margin-left: 5%;
   margin-right: 5%;
 }
-
 body .contact-form form .form-group {
   margin-bottom: 1.2%;
 }
-
 body .new-post-form {
   background-color: #333;
   color: aliceblue;
   margin-bottom: 5%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  justify-content: center;
 }
-
 body .successMessage {
   padding-top: 10%;
 }
@@ -164,31 +118,20 @@ footer {
   width: 100%;
   padding: 20px;
 }
-
 footer .icons {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   list-style-type: none;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   padding-left: 0;
 }
-
 footer .icons li {
   padding-right: 1%;
 }
-
 footer a {
   text-decoration: none;
-  color: #d8d8d8;
+  color: rgb(216, 216, 216);
 }
-
 footer a:hover {
   color: white;
 }
@@ -198,10 +141,8 @@ footer a:hover {
     background-size: cover;
   }
 }
-
 @media screen and (max-width: 1024px) {
   body {
     background-size: cover;
   }
-}
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
