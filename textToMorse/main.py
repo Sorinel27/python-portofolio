@@ -10,6 +10,7 @@ morse_code_dict = {
     '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
     '9': '----.', '0': '-----', ' ': '/'
 }
+reversed_dict = {value: key for key, value in morse_code_dict.items()}
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -23,19 +24,16 @@ def main_page():
     encodedText = ""
     if request.method == 'POST':
         text = request.form['text']
-        og = text
-        print(text)
         text = text.lower()
         for char in text:
             if char == " ":
-                encodedText += "   "
+                encodedText += '&#160;' # preserve multiple spaces in HTML
             elif char in morse_code_dict:
                 if encodedText == "":
                     encodedText = encodedText + morse_code_dict[char]
                 else:
                     encodedText = encodedText + " " + morse_code_dict[char]
         # return render_template('index.html', result="ceva de txt")
-    print(encodedText)
     return render_template('index.html', text=text, encodedText=encodedText, encode=1)
 
 @app.route('/decode', methods=['GET', 'POST'])
@@ -49,17 +47,19 @@ def decode_page():
     if request.method == 'POST':
         text = request.form['text']
         print(text)
-        reversed_dict = {value: key for key, value in morse_code_dict.items()}
         index = 0
         # to do: refactor this part
         for i in range(1, len(text)):
-            if text[i] == " " and text[i - 1] != " ":
+            if i == len(text) - 1:
+                decodedText += reversed_dict[text.split(" ")[index]]
+            elif text[i] == " " and text[i - 1] != " ":
                 if text.split(" ")[index] in reversed_dict:
                     decodedText += reversed_dict[text.split(" ")[index]]
                 index += 1
-            else:
+            elif text[i] == " " and text[i - 1] == " ":
+                if text[i + 1] != " ":
+                    decodedText += " "
                 index += 1
-    print(decodedText)
     return render_template('index.html', text=text, decodedText=decodedText, encode=0)
 
 if __name__ == '__main__':
