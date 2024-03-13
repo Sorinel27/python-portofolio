@@ -46,9 +46,7 @@ def decode_page():
     decodedText = ""
     if request.method == 'POST':
         text = request.form['text']
-        print(text)
         index = 0
-        # to do: refactor this part
         for i in range(1, len(text)):
             if i == len(text) - 1:
                 decodedText += reversed_dict[text.split(" ")[index]]
